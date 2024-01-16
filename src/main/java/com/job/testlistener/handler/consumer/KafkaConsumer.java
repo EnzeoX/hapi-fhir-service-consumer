@@ -24,7 +24,6 @@ public class KafkaConsumer {
             groupId = "${spring.kafka.consumer.group-id}")
     public void consumeMessage(String message) {
         Objects.requireNonNull(message);
-//        log.info("Message received: {}", message);
         hapiFhriService.sendBundleToHapi(message);
     }
 }
