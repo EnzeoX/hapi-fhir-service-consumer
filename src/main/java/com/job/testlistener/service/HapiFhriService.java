@@ -1,11 +1,8 @@
 package com.job.testlistener.service;
 
-import com.job.testlistener.exception.RestExceptionAdvice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.annotation.AliasFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -28,10 +25,13 @@ public class HapiFhriService {
         processAndSend("/Encounter", data);
     }
 
-
     private void processAndSend(String endpoint, String data) {
         Objects.requireNonNull(data, "No data provided to send");
-        ResponseEntity<String> response = restTemplate.postForEntity(endpoint, data, String.class);
-        log.info(response.getBody());
+        try {
+            ResponseEntity<String> response = restTemplate.postForEntity(endpoint, data, String.class);
+            log.info(response.getBody());
+        } catch (RuntimeException e) {
+            log.error(e.getMessage());
+        }
     }
 }
