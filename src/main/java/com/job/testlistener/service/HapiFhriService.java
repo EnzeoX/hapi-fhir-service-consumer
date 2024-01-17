@@ -54,7 +54,7 @@ public class HapiFhriService {
         log.info(response.getBody());
     }
 
-    // cache unsended messages to kafka and send them later
+    // cache unsent messages from kafka to hapi-fhir-server and send them later
     // by now is for Encounter Bundles only
     @Scheduled(fixedDelay = 10000L)
     public void checkForMessageToResend() {
